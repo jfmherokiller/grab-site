@@ -34,6 +34,7 @@ please [file an issue](https://github.com/ArchiveTeam/grab-site/issues) - thank 
 
 **Contents**
 
+- [Install with Docker](#install-with-docker)
 - [Install on Ubuntu 16.04, 18.04, Debian 9 (stretch), Debian 10 (buster)](#install-on-ubuntu-1604-1804-debian-9-stretch-debian-10-buster)
 - [Install on NixOS](#install-on-nixos)
 - [Install on another distribution lacking Python 3.7.x](#install-on-another-distribution-lacking-python-37x)
@@ -56,6 +57,35 @@ please [file an issue](https://github.com/ArchiveTeam/grab-site/issues) - thank 
 - [Help](#help)
 
 
+Install with Docker
+---
+Get the pre-built docker container:
+
+```bash
+docker pull jfmherokiller/warcfactory-full
+```
+
+Start the grab-site server. You can set the port, volume, and name to whatever you want:
+
+```bash
+docker run --detach -p 29000:29000 -v <docker host path>:/data --name warcfactory jfmherokiller/warcfactory-full
+```
+Run a new crawl:
+
+```bash
+docker exec warcfactory grab-site --no-offsite-links http://xkcd.com/
+```
+An example setup that outputs the finished warcs to a host directory:
+
+> modified initial start:
+
+> ```bash
+> docker run --detach -p 29000:29000 -v <host path where final warcs are stored>:/final-data -v <host directory where the temp data is stored>:/data --name warcfactory jfmherokiller/warcfactory-full
+> ```
+> how to run grab-site with the new volume:
+> ```bash
+> docker exec warcfactory grab-site --finished-warc-dir=/final-data --no-offsite-links http://xkcd.com/
+> ```
 
 Install on Ubuntu 16.04, 18.04, Debian 9 (stretch), Debian 10 (buster)
 ---
